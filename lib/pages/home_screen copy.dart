@@ -1,33 +1,26 @@
 import 'package:flutter/material.dart';
 
-class Tab {
-  final String title;
-  Tab(this.title);
-}
-// Home(
-//         tabs: List.generate(
-//             8,
-//             (i) => Tab(i > 0
-//                 ? (i == 1
-//                     ? "周一"
-//                     : i == 2
-//                         ? "周二"
-//                         : i == 3
-//                             ? "周三"
-//                             : i == 4
-//                                 ? "周四"
-//                                 : i == 5 ? "周五" : i == 6 ? "周六" : "周日")
-//                 : '个性推荐'))),
-
 class HomeScreen extends StatelessWidget {
-  final List<Tab> tabs;
-  HomeScreen({Key key, @required this.tabs}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
+    final _size = MediaQuery.of(context).size;
+    final _ViewportWidth = _size.width;
+    final _ViewportHeight = _size.height;
+
+    
+    final _kToolbarHeight = kToolbarHeight;
+    // final _kBottomNavigationBarHeight = kBottomNavigationBarHeight;
+    // final _kTextTabBarHeight = kTextTabBarHeight;
+    // 状态栏高度
+    final _statusBarHeight = MediaQuery.of(context).padding.top;
+
+    // print('${_kToolbarHeight} ------ ${_kBottomNavigationBarHeight} ------------------ ${_kTextTabBarHeight}');
+
     var capsule = Container(
-      padding: EdgeInsets.fromLTRB(14.0, 25.0, 14.0, 0),
+      padding: EdgeInsets.fromLTRB(14.0, 0, 14.0, 0),
       color: Colors.yellow,
-      height: 60.0,
+      height: _kToolbarHeight - _statusBarHeight,
       alignment: Alignment.center,
       child: Row(
         children: <Widget>[
@@ -70,13 +63,14 @@ class HomeScreen extends StatelessWidget {
       ),
       child: ListView.builder(
           scrollDirection: Axis.horizontal,
-          itemCount: tabs.length,
+          itemCount: 8,
           itemBuilder: (context, index) {
             return Container(
               alignment: Alignment.center,
               padding: EdgeInsets.fromLTRB(12.0, 0.0, 12.0, 0.0),
               child: Text(
-                '${tabs[index].title}',
+                // '${tabs[index].title}',
+                '个性推荐',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 14.0,
@@ -157,8 +151,8 @@ class HomeScreen extends StatelessWidget {
             child: Stack(
               children: <Widget>[
                 Container(
-                    width: 500.0,
-                    height: 180.0,
+                    width: _ViewportWidth,
+                    height: _ViewportWidth/5*2.8,
                     color: Colors.lightBlue,
                     child: Image.asset(
                         "images/img1.jpg",
@@ -167,7 +161,7 @@ class HomeScreen extends StatelessWidget {
                   bottom: 0.0,
                   left: 0.0,
                   child: Container(
-                    width: 500.0,
+                    width: _ViewportWidth,
                     padding: EdgeInsets.all(8),
                     child: Text(
                       '技术胖',
@@ -237,20 +231,23 @@ class HomeScreen extends StatelessWidget {
         ],
       ),
     );
+    
+
+
     return Scaffold(
-      appBar: AppBar(
-        title: Text("首页"),
-        backgroundColor: Colors.yellow[600],
+      appBar: PreferredSize(
+        child: AppBar(),
+        preferredSize: Size.fromHeight(0)
       ),
       body: Center(
-          child: new Container(
-              color: Colors.grey[100],
+          child: Container(
               child: Column(children: <Widget>[
-                // capsule,
+                capsule,
                 tabBar,
-                new Container(
-                  height: 206.0,
-                  child: new ListView(
+                Container(
+                  height: _ViewportHeight - 150.0,
+                  color: Colors.grey[100],
+                  child: ListView(
                     children: <Widget>[
                       goodsItem,
                       goodsItem,

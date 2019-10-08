@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-
-import 'each_view.dart';
+import 'package:flutter_app/widgets/widget_appBar.dart';
+import 'package:flutter_app/pages/each_view.dart';
+import 'package:flutter_app/widgets/custome_router.dart';
 
 class BottomNavigationWeiget extends StatefulWidget {
   @override
@@ -24,9 +25,13 @@ class _BottomNavigationWeigetState extends State<BottomNavigationWeiget> {
       body: _eachView[_currentIndex],
       floatingActionButton: FloatingActionButton(
         onPressed: (){
-          Navigator.of(context).push(MaterialPageRoute(builder:(BuildContext context){
-            return EachView("new pages");
-          }));
+          
+          // Navigator.of(context).push(MaterialPageRoute(builder:(BuildContext context){
+          //   return 
+          //   EachView("new pages");
+          //   // Widget_AppBar_Page();
+          // }));
+          Navigator.of(context).push(CustomeRoute(EachView("new pages")));
         },
         tooltip: "添加",
         child: Icon(
