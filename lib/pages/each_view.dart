@@ -19,7 +19,20 @@ class _EachViewState extends State<EachView> {
         title: Text(widget._title),
       ),
       body: Center(
-        child: Text(widget._title),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(widget._title),
+            RawMaterialButton(
+              child: Text('这是 ${widget._title}'),
+              onPressed: () {
+                print('从 ${widget._title} 返回');
+                Navigator.pop(context, '从 ${widget._title} 返回');
+                // Navigator.maybePop(context, '从 ${widget._title} 返回');
+              },
+            )
+          ],
+        )
       ),
     );
   }

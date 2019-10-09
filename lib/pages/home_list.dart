@@ -1,7 +1,10 @@
+import 'dart:math';
 import "package:flutter/material.dart";
+import 'package:flutter_app/widgets/custome_router.dart';
+import 'package:flutter_app/pages/each_view.dart';
 
 class HomeList extends StatefulWidget {
-  int _currentIndex;    // tab index
+  int _currentIndex; // tab index
   HomeList(this._currentIndex);
   @override
   _HomeListState createState() => _HomeListState();
@@ -12,14 +15,11 @@ class _HomeListState extends State<HomeList> {
   Widget build(BuildContext context) {
     final _size = MediaQuery.of(context).size;
     final _ViewportWidth = _size.width;
-    
-    return Container(
-      child: ListView(
-        children: _getListData(_ViewportWidth)
-      )
-    );
+
+    return Container(child: ListView(children: _getListData(_ViewportWidth)));
   }
-   _getListData(_ViewportWidth) {
+
+  _getListData(_ViewportWidth) {
     List<Widget> widgets = [];
     // 模拟数据
     _goodsItem(index) {
@@ -30,10 +30,10 @@ class _HomeListState extends State<HomeList> {
           children: <Widget>[
             Container(
               padding: EdgeInsets.fromLTRB(12.0, 8.0, 12.0, 8.0),
-              child: new Row(
+              child: Row(
                 children: <Widget>[
                   Expanded(
-                    child: new Container(
+                      child: Container(
                     child: Column(
                       children: <Widget>[
                         Row(
@@ -56,11 +56,11 @@ class _HomeListState extends State<HomeList> {
                             Container(
                                 alignment: Alignment.centerLeft,
                                 child: Text(
-                                  '再度与你${index+1}',
+                                  '再度与你${index + 1}',
                                   style: TextStyle(
-                                    fontWeight: FontWeight.w500,
+                                    fontWeight: FontWeight.w600,
                                     color: Colors.black87,
-                                    fontSize: 16.0,
+                                    fontSize: 18.0,
                                   ),
                                 ))
                           ],
@@ -68,8 +68,8 @@ class _HomeListState extends State<HomeList> {
                         Container(
                             padding: EdgeInsets.fromLTRB(0.0, 6.0, 0.0, 0.0),
                             alignment: Alignment.centerLeft,
-                            child: new Text(
-                              '作者: 韩旭L-Mo',
+                            child: Text(
+                              '作者：韩旭L-Mo',
                               style: TextStyle(
                                 color: Colors.black45,
                                 fontSize: 14.0,
@@ -78,33 +78,35 @@ class _HomeListState extends State<HomeList> {
                       ],
                     ),
                   )),
-                  new Container(
-                      child: new Text(
-                    '全集 >',
-                    style: TextStyle(color: Colors.black45, fontSize: 14.0),
-                  )),
+                  Row(
+                    children: <Widget>[
+                      Text(
+                        '全集',
+                        style: TextStyle(color: Colors.black45, fontSize: 15.0),
+                      ),
+                      Icon(Icons.navigate_next,color: Colors.black45,)
+                    ]
+                  ),
                 ],
               ),
             ),
             RawMaterialButton(
               onPressed: () {
-                // _goodsAsync(context);
+                _goodsAsync(context, index);
               },
               child: Stack(
                 children: <Widget>[
                   Container(
                       width: _ViewportWidth,
-                      height: _ViewportWidth/5*2.8,
+                      height: _ViewportWidth / 5 * 2.8,
                       color: Colors.lightBlue,
-                      child: Image.asset(
-                          "images/img1.jpg",
-                          fit: BoxFit.cover)),
+                      child: Image.asset("images/img1.jpg", fit: BoxFit.cover)),
                   Positioned(
                     bottom: 0.0,
                     left: 0.0,
                     child: Container(
                       width: _ViewportWidth,
-                      padding: EdgeInsets.all(8),
+                      padding: EdgeInsets.fromLTRB(12.0, 8.0, 12.0, 8.0),
                       child: Text(
                         '技术胖',
                         style: TextStyle(
@@ -138,7 +140,7 @@ class _HomeListState extends State<HomeList> {
                             '第5话(下) 败露',
                             style: TextStyle(
                               color: Colors.black87,
-                              fontSize: 15.0,
+                              fontSize: 16.0,
                             ),
                           ))),
                   Container(
@@ -174,9 +176,18 @@ class _HomeListState extends State<HomeList> {
         ),
       );
     }
+
     for (int i = 0; i < 100; i++) {
       widgets.add(_goodsItem(i));
     }
     return widgets;
+  }
+
+  _goodsAsync(BuildContext context, index) async {
+    final result = await Navigator.of(context).push(CustomeRoute(EachView("detail ${index + 1}")));
+    print('result-----${result}');
+    if(result){       // 自定义按钮返回传参
+      Scaffold.of(context).showSnackBar(SnackBar(content: Text('$result')));
+    }
   }
 }
